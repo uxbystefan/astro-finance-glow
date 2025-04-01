@@ -11,6 +11,7 @@ import {
   LogOut
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Link, useLocation } from "react-router-dom";
 
 interface SidebarProps {
   open: boolean;
@@ -18,16 +19,18 @@ interface SidebarProps {
 }
 
 const navItems = [
-  { icon: <LayoutDashboard size={20} />, label: "Dashboard", active: true },
-  { icon: <CreditCard size={20} />, label: "Cards", active: false },
-  { icon: <Wallet size={20} />, label: "Accounts", active: false },
-  { icon: <History size={20} />, label: "Transactions", active: false },
-  { icon: <BarChart3 size={20} />, label: "Analytics", active: false },
-  { icon: <PieChart size={20} />, label: "Investments", active: false },
-  { icon: <Settings size={20} />, label: "Settings", active: false },
+  { icon: <LayoutDashboard size={20} />, label: "Dashboard", path: "/" },
+  { icon: <CreditCard size={20} />, label: "Cards", path: "/cards" },
+  { icon: <Wallet size={20} />, label: "Accounts", path: "/accounts" },
+  { icon: <History size={20} />, label: "Transactions", path: "/transactions" },
+  { icon: <BarChart3 size={20} />, label: "Analytics", path: "/analytics" },
+  { icon: <PieChart size={20} />, label: "Investments", path: "/investments" },
+  { icon: <Settings size={20} />, label: "Settings", path: "/settings" },
 ];
 
 const Sidebar = ({ open, setOpen }: SidebarProps) => {
+  const location = useLocation();
+  
   return (
     <>
       {/* Overlay for mobile */}
@@ -50,23 +53,27 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
           </div>
 
           <nav className="mt-6 flex flex-col gap-2">
-            {navItems.map((item, index) => (
-              <a
-                key={index}
-                href="#"
-                className={cn("nav-item", item.active && "active")}
-              >
-                {item.icon}
-                <span>{item.label}</span>
-              </a>
-            ))}
+            {navItems.map((item, index) => {
+              const isActive = location.pathname === item.path;
+              return (
+                <Link
+                  key={index}
+                  to={item.path}
+                  className={cn("nav-item", isActive && "active")}
+                  onClick={() => setOpen(false)}
+                >
+                  {item.icon}
+                  <span>{item.label}</span>
+                </Link>
+              );
+            })}
           </nav>
 
           <div className="mt-auto pt-6 border-t border-fintech-card-border">
-            <a href="#" className="nav-item text-red-400 hover:text-red-300">
+            <Link to="/logout" className="nav-item text-red-400 hover:text-red-300">
               <LogOut size={20} />
               <span>Log Out</span>
-            </a>
+            </Link>
           </div>
         </div>
       </aside>
