@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Bank, Plus, ArrowRight } from "lucide-react";
+import { Landmark, Plus, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -27,7 +27,7 @@ const Accounts = () => {
             <CardHeader className="pb-2">
               <CardTitle className="flex justify-between items-center">
                 <span>{account.name}</span>
-                <Bank className={index === 0 ? "text-fintech-purple" : "text-fintech-blue"} />
+                <Landmark className={index === 0 ? "text-fintech-purple" : "text-fintech-blue"} />
               </CardTitle>
             </CardHeader>
             <CardContent>
